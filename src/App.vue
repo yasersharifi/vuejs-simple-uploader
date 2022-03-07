@@ -1,16 +1,21 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
   <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <!-- Drag And Drop -->
+  <drag-drop-uploader/>
 </template>
 
 <script>
+import DragDropUploader from './components/DragDropUploader.vue'
 import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    HelloWorld,
+    DragDropUploader
   }
+    
 }
 </script>
 

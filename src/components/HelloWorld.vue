@@ -5,7 +5,7 @@ https://academind.com/tutorials/vue-image-upload
 
 
 -->
-    <div class="hello">
+    <div class="hello bg-red-500">
         <h1>{{ msg }}</h1>
         <input type="file" v-on:change="onLoad($event)" v-on:load="getDataUrl($event)">
         <h1>Preview</h1>
