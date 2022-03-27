@@ -39,6 +39,11 @@
                     //     isCover: false
                     // },
                 ],
+                allowedTypes: ['jpg', 'png', 'jpeg', 'gif'],
+                allowedFileCountUpload: 8,
+                allowedFileCountUploadErrorMsg: '',
+                allowedTypesError: '',
+                filesUploadErros: [],
             }
         },
         methods: {
@@ -74,6 +79,18 @@
                     return URL.createObjectURL(file);
                 }
                 return '';
+            },
+            checkFilesCountToUpload(filesCount, allowedCount) {
+                if (filesCount > allowedCount) {
+                    this.filesUploadErros.push('allowedFileCountUploadErrorMsg');
+                    return false;
+                }
+            },
+            checkFileTypesError(fileType, allowedTypes) {
+                if (! allowedTypes.includes(fileType)) {
+                    this.filesUploadErros.push('allowedTypesError');
+                    return false;
+                }
             },
             createBase64Images(event) {
                 let selectedImg = event.target.files[0];
