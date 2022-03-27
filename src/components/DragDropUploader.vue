@@ -3,54 +3,17 @@
         <h1 class="block my-6 text-2xl text-[#494949]">File Uploader</h1>
         <div class="grid grid-cols-4 p-6 gap-6 bg-[#F8F8F8] border border-solid border-[#D3D3D3] rounded-xl">
             <!-- Start Previews -->
-            <div v-for="(item, index) in images"
-                 :key="index"
-                 class="w-full h-[200px] rounded-xl relative z-1">
-                <img :src="item.src"
-                     class="w-full h-full rounded-xl"
-                     alt="">
-                <div v-click-outside="hideImageSettingModal"
-                    class="flex items-center justify-center w-7 h-7 bg-[#ABABAB] absolute top-2 right-2 z-10 rounded-full cursor-pointer">
-                    <div class="w-full h-full flex items-center justify-center"
-                         @click.stop="toggleImageSettingModal(index)">
-                        <icon-base type="edit"
-                              classes="w-5 h-5"
-                              width="20"
-                              height="20"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="#ffffff"
-                              stroke-width="2"></icon-base>
-                    </div>
-                    <!-- start popup -->
-                    <span :class="item.imageSettingModalIsActive ? 'flex' : 'hidden'" class="flex-col gap-3 p-4 w-[158px] h-[88] text-sm font-tajawal-medium text-[#A6A5A6] bg-white absolute top-6 -left-6 cursor-auto rounded-lg z-20">
-                        <button type="button"
-                                @click="makeImageCover(index)">Make Cover Image</button>
-                        <button type="button"
-                                @click="deleteImage(index)">Delete Image</button>
-                    </span>
-                    <!-- end popup -->
-                </div>
-
-                <!-- start star icon -->
-                <div :class="item.isCover ? 'flex' : 'hidden'"
-                     class="flex items-center justify-center w-7 h-7 bg-[#ABABAB] absolute bottom-2 right-2 z-20 rounded-full cursor-pointer">
-                    <icon-base type="star"
-                          classes="w-5 h-5"
-                          width="20"
-                          height="20"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="#ffffff"
-                          stroke-width="2"></icon-base>
-                </div>
-                <!-- end star icon -->
-            </div>
+           <image-preview :images="images"
+                            @hideImageSettingModal="hideImageSettingModal"
+                            @toggleImageSettingModal="toggleImageSettingModal"
+                            @makeImageCover="makeImageCover"
+                            @deleteImage="deleteImage">
+            </image-preview>
             <!-- End Previews -->
 
             <!-- start upload box -->
             <label :class="images.length < 8 ? 'grid' : 'hidden'" for="file-uploader"
-                   class="w-full h-[200px] bg-white border border-solid border-[#D3D3D3] rounded-xl grid-cols-1 grid-rows-2 cursor-pointer"
+                   class="w-full h-[200px] bg-white border border-solid border-[#D3D3D3] rounded-xl grid-cols-1 grid-rows-2 cursor-pointer relative"
                    @dragover="dragover" @dragleave="dragleave" @drop="drop">
                 <span class="row-span-1 text-sm font-tajawal-medium flex flex-col items-center justify-end">
                     <span>Drop files here</span>
@@ -76,10 +39,13 @@
 </template>
 
 <script>
-    import ClickOutside from "vue-click-outside";
+    import ImagePreview from '@/components/Uploader/ImagePreview.vue';
 
     export default {
         name: "FilePons",
+        components: {
+            ImagePreview
+        },
         data() {
             return {
                 images: [
@@ -188,10 +154,6 @@
                 event.currentTarget.classList.remove('border-dashed');
             },
         },
-        directives: {
-            ClickOutside
-        }
-
     }
 </script>
 
