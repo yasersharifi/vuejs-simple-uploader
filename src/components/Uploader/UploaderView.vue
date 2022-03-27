@@ -103,7 +103,6 @@
                 return '';
             },
             checkFilesCountToUpload(filesCount, allowedCount) {
-                console.log('checkFileCount', filesCount, allowedCount);
                 if (filesCount > allowedCount) {
                     if (! this.filesUploadErros.includes('allowedFileCountUpload')) {
                         this.filesUploadErros.push('allowedFileCountUpload');
@@ -116,7 +115,6 @@
                 // fileSize -> KB
                 // allowedSize -> MB
                 let fileSizeMb = this.convertByteToMb(fileSize);
-                console.log('checkFileSize', fileSize, allowedSize, fileSizeMb);
                 if (! fileSizeMb) {
                     if (! this.filesUploadErros.includes('allowedFileSizeToUpload')) {
                         this.filesUploadErros.push('allowedFileSizeToUpload');
@@ -132,7 +130,6 @@
                 return true;
             },
             checkFileTypesError(fileType, allowedTypes) {
-                console.log('checkFileTypes', fileType, allowedTypes);
                 if (! allowedTypes.includes(fileType)) {
                     if (! this.filesUploadErros.includes('allowedTypes')) {
                         this.filesUploadErros.push('allowedTypes');
