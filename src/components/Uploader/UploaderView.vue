@@ -57,29 +57,8 @@
                 this.images[index].imageSettingModalIsActive = ! this.images[index].imageSettingModalIsActive; // toggle modal
             },
             loadImage(event) {
-                let selectedImg = event.target.files[0];
-                let previewImg = URL.createObjectURL(selectedImg);
+                console.log(event.target.files);
 
-                //base 64
-                let canvasImg = null;
-                let self = this;
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    canvasImg = e.target.result; // when success
-                    // add to images array
-                    self.images.push({
-                        src: previewImg,
-                        imageSettingModalIsActive: false,
-                        base64: canvasImg,
-                        isCover: false,
-                    })
-                    //
-                    console.log(self.images)
-                };
-                reader.onerror = function(error) {
-                    console.log(error); // when error
-                };
-                reader.readAsDataURL(selectedImg);
 
             },
             createBase64Images(event) {

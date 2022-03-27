@@ -7,6 +7,6 @@
 
     export default {
         name: "UploaderView",
-        components: { DragDropUploader },
+        components: { UploaderView },
     }
 </script>
