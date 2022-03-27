@@ -57,9 +57,23 @@
                 this.images[index].imageSettingModalIsActive = ! this.images[index].imageSettingModalIsActive; // toggle modal
             },
             loadImage(event) {
-                console.log(event.target.files);
-
-
+                const selectedImages = event.target.files;
+                const self = this;
+                let image = {};
+                [...selectedImages].forEach(item => {
+                    image = {
+                        src: self.convertFileToBlob(item),
+                        isCover: false,
+                        imageSettingModalIsActive: false
+                    }
+                    self.images.push(image);
+                })
+            },
+            convertFileToBlob(file) {
+                if (file) {
+                    return URL.createObjectURL(file);
+                }
+                return '';
             },
             createBase64Images(event) {
                 let selectedImg = event.target.files[0];
