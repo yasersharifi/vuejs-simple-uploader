@@ -41,8 +41,10 @@
                 ],
                 allowedTypes: ['jpg', 'png', 'jpeg', 'gif'],
                 allowedFileCountUpload: 8,
-                allowedFileCountUploadErrorMsg: '',
-                allowedTypesError: '',
+                filesUploadErrosMsg: {
+                    allowedFileCountUploadErrorMsg: '',
+                    allowedTypesError: '',
+                },
                 filesUploadErros: [],
             }
         },
@@ -65,14 +67,24 @@
                 const selectedImages = event.target.files;
                 const self = this;
                 let image = {};
-                [...selectedImages].forEach(item => {
-                    image = {
-                        src: self.convertFileToBlob(item),
-                        isCover: false,
-                        imageSettingModalIsActive: false
-                    }
-                    self.images.push(image);
+                let counter = 0;
+                const imagesLen = this.images.length;
+                [...selectedImages].forEach((item) => {
+                    // check file count allowed to upload
+                    if (self.checkFilesCountToUpload(++counter + imagesLen, this.allowedFileCountUpload)) {
+                         // check file types
+                        if (self.checkFileTypesError(item.type.split('/')[1], self.allowedTypes)) {
+                            // upload images
+                            image = {
+                                src: self.convertFileToBlob(item),
+                                isCover: false,
+                                imageSettingModalIsActive: false
+                            }
+                            self.images.push(image);  
+                        }
+                    }             
                 })
+                console.log(self.filesUploadErros);
             },
             convertFileToBlob(file) {
                 if (file) {
@@ -82,15 +94,21 @@
             },
             checkFilesCountToUpload(filesCount, allowedCount) {
                 if (filesCount > allowedCount) {
-                    this.filesUploadErros.push('allowedFileCountUploadErrorMsg');
+                    if (! this.filesUploadErros.includes('allowedFileCountUploadErrorMsg')) {
+                        this.filesUploadErros.push('allowedFileCountUploadErrorMsg');
+                    }
                     return false;
                 }
+                return true;
             },
             checkFileTypesError(fileType, allowedTypes) {
                 if (! allowedTypes.includes(fileType)) {
-                    this.filesUploadErros.push('allowedTypesError');
+                    if (! this.filesUploadErros.includes('allowedTypesError')) {
+                        this.filesUploadErros.push('allowedTypesError');
+                    }
                     return false;
                 }
+                return true;
             },
             createBase64Images(event) {
                 let selectedImg = event.target.files[0];
