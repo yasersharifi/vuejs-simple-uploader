@@ -41,9 +41,11 @@
                 ],
                 allowedTypes: ['jpg', 'png', 'jpeg', 'gif'],
                 allowedFileCountUpload: 8,
+                allowedFileSizeToUpload: .1, // MB
                 filesUploadErrosMsg: {
-                    allowedFileCountUploadErrorMsg: '',
-                    allowedTypesError: '',
+                    allowedFileCountUpload: '',
+                    allowedTypes: '',
+                    allowedFileSizeToUpload: 10, // MB
                 },
                 filesUploadErros: [],
             }
@@ -74,13 +76,16 @@
                     if (self.checkFilesCountToUpload(++counter + imagesLen, this.allowedFileCountUpload)) {
                          // check file types
                         if (self.checkFileTypesError(item.type.split('/')[1], self.allowedTypes)) {
-                            // upload images
-                            image = {
-                                src: self.convertFileToBlob(item),
-                                isCover: false,
-                                imageSettingModalIsActive: false
+                            // check file size
+                            if (self.checkFileSize(item.size, self.allowedSize)) {
+                                // upload images
+                                image = {
+                                    src: self.convertFileToBlob(item),
+                                    isCover: false,
+                                    imageSettingModalIsActive: false
+                                }
+                                self.images.push(image);  
                             }
-                            self.images.push(image);  
                         }
                     }             
                 })
@@ -94,8 +99,26 @@
             },
             checkFilesCountToUpload(filesCount, allowedCount) {
                 if (filesCount > allowedCount) {
-                    if (! this.filesUploadErros.includes('allowedFileCountUploadErrorMsg')) {
-                        this.filesUploadErros.push('allowedFileCountUploadErrorMsg');
+                    if (! this.filesUploadErros.includes('allowedFileCountUpload')) {
+                        this.filesUploadErros.push('allowedFileCountUpload');
+                    }
+                    return false;
+                }
+                return true;
+            },
+            checkFileSize(fileSize, allowedSize) {
+                // fileSize -> KB
+                // allowedSize -> MB
+                let fileSizeMb = this.convertKbToMb(fileSize);
+                if (! fileSizeMb) {
+                    if (! this.filesUploadErros.includes('allowedFileSizeToUpload')) {
+                        this.filesUploadErros.push('allowedFileSizeToUpload');
+                    }
+                    return false;
+                }
+                if (fileSizeMb > allowedSize) {
+                    if (! this.filesUploadErros.includes('allowedFileSizeToUpload')) {
+                        this.filesUploadErros.push('allowedFileSizeToUpload');
                     }
                     return false;
                 }
@@ -103,12 +126,18 @@
             },
             checkFileTypesError(fileType, allowedTypes) {
                 if (! allowedTypes.includes(fileType)) {
-                    if (! this.filesUploadErros.includes('allowedTypesError')) {
-                        this.filesUploadErros.push('allowedTypesError');
+                    if (! this.filesUploadErros.includes('allowedTypes')) {
+                        this.filesUploadErros.push('allowedTypes');
                     }
                     return false;
                 }
                 return true;
+            },
+            convertKbToMb(kb) {
+                if (kb) {
+                    return (+ kb) * 0.0009765625;
+                }
+                return false;
             },
             createBase64Images(event) {
                 let selectedImg = event.target.files[0];
