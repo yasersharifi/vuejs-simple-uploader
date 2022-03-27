@@ -1,12 +1,12 @@
 <template>
-    <drag-drop-uploader></drag-drop-uploader>
+    <uploader-view></uploader-view>
 </template>
 
 <script>
-    import DragDropUploader from '@/components/DragDropUploader.vue'
+    import UploaderView from '@/components/Uploader/UploaderView.vue'
 
     export default {
-        name: "FileUploader",
+        name: "UploaderView",
         components: { DragDropUploader },
     }
 </script>
