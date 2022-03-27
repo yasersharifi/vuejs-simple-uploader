@@ -82,6 +82,31 @@
                 reader.readAsDataURL(selectedImg);
 
             },
+            createBase64Images(event) {
+                let selectedImg = event.target.files[0];
+                let previewImg = URL.createObjectURL(selectedImg);
+
+                //base 64
+                let canvasImg = null;
+                let self = this;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    canvasImg = e.target.result; // when success
+                    // add to images array
+                    self.images.push({
+                        src: previewImg,
+                        imageSettingModalIsActive: false,
+                        base64: canvasImg,
+                        isCover: false,
+                    })
+                    //
+                    console.log(self.images)
+                };
+                reader.onerror = function(error) {
+                    console.log(error); // when error
+                };
+                reader.readAsDataURL(selectedImg);
+            },
             makeImageCover(imageIndex) {
                 if (this.images) {
                     this.images.forEach((item, index) => {
