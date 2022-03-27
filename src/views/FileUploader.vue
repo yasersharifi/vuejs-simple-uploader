@@ -6,7 +6,7 @@
     import UploaderView from '@/components/Uploader/UploaderView.vue'
 
     export default {
-        name: "UploaderView",
+        name: "FileUploader",
         components: { UploaderView },
     }
 </script>
