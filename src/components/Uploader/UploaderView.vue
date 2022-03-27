@@ -13,7 +13,10 @@
 
             <!-- start upload box -->
             <upload-box :images="images"
-                        @loadImage="loadImage"></upload-box>
+                        @loadImage="loadImage"
+                        @dragover="dragover"
+                        @dragleave="dragleave"
+                        @drop="drop"></upload-box>
             <!-- end upload box -->
         </div>
     </div>

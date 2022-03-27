@@ -1,7 +1,7 @@
 <template>
     <label :class="images.length < 8 ? 'grid' : 'hidden'" for="file-uploader"
             class="w-full h-[200px] bg-white border border-solid border-[#D3D3D3] rounded-xl grid-cols-1 grid-rows-2 cursor-pointer relative"
-            @dragover="dragover" @dragleave="dragleave" @drop="drop">
+            @dragover="$emit('dragover', $event)" @dragleave="$emit('dragleave', $event)" @drop="$emit('drop', $event)">
         <span class="row-span-1 text-sm font-tajawal-medium flex flex-col items-center justify-end">
             <span>Drop files here</span>
             <span>to upload</span>
