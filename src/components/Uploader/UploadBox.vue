@@ -19,7 +19,8 @@
             type="file"
             id="file-uploader"
             @change="$emit('loadImage', $event)"
-            ref="file">
+            ref="file"
+            multiple>
 </template>
 
 <script>
