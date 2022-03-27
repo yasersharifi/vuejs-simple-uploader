@@ -41,7 +41,7 @@
                 ],
                 allowedTypes: ['jpg', 'png', 'jpeg', 'gif'],
                 allowedFileCountUpload: 8,
-                allowedFileSizeToUpload: .1, // MB
+                allowedFileSizeToUpload: 4, // MB
                 filesUploadErrosMsg: {
                     allowedFileCountUpload: '',
                     allowedTypes: '',
@@ -77,7 +77,7 @@
                          // check file types
                         if (self.checkFileTypesError(item.type.split('/')[1], self.allowedTypes)) {
                             // check file size
-                            if (self.checkFileSize(item.size, self.allowedSize)) {
+                            if (self.checkFileSize(item.size, self.allowedFileSizeToUpload)) {
                                 // upload images
                                 image = {
                                     src: self.convertFileToBlob(item),
@@ -98,6 +98,7 @@
                 return '';
             },
             checkFilesCountToUpload(filesCount, allowedCount) {
+                console.log('checkFileCount', filesCount, allowedCount);
                 if (filesCount > allowedCount) {
                     if (! this.filesUploadErros.includes('allowedFileCountUpload')) {
                         this.filesUploadErros.push('allowedFileCountUpload');
@@ -109,7 +110,8 @@
             checkFileSize(fileSize, allowedSize) {
                 // fileSize -> KB
                 // allowedSize -> MB
-                let fileSizeMb = this.convertKbToMb(fileSize);
+                let fileSizeMb = this.convertByteToMb(fileSize);
+                console.log('checkFileSize', fileSize, allowedSize, fileSizeMb);
                 if (! fileSizeMb) {
                     if (! this.filesUploadErros.includes('allowedFileSizeToUpload')) {
                         this.filesUploadErros.push('allowedFileSizeToUpload');
@@ -125,6 +127,7 @@
                 return true;
             },
             checkFileTypesError(fileType, allowedTypes) {
+                console.log('checkFileTypes', fileType, allowedTypes);
                 if (! allowedTypes.includes(fileType)) {
                     if (! this.filesUploadErros.includes('allowedTypes')) {
                         this.filesUploadErros.push('allowedTypes');
@@ -133,9 +136,9 @@
                 }
                 return true;
             },
-            convertKbToMb(kb) {
-                if (kb) {
-                    return (+ kb) * 0.0009765625;
+            convertByteToMb(byte) {
+                if (byte) {
+                    return (+ byte / 1000) * 0.0009765625;
                 }
                 return false;
             },
