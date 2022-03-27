@@ -1,6 +1,6 @@
 <template>
     <div class="container mx-auto">
-        <h1 class="block mb-6 text-2xl">File Pond</h1>
+        <h1 class="block my-6 text-2xl text-[#494949]">File Uploader</h1>
         <div class="grid grid-cols-4 p-6 gap-6 bg-[#F8F8F8] border border-solid border-[#D3D3D3] rounded-xl">
             <!-- Start Previews -->
             <div v-for="(item, index) in images"

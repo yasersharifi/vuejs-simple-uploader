@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import router from './router'
 
 import '@/assets/fonts/font.css';
 import '@/assets/tailwind/app.css';
@@ -9,4 +10,4 @@ import '@/assets/tailwind/app.css';
 // globally components
 import './icons';
 
-createApp(App).mount('#app')
+createApp(App).use(router).mount('#app')
