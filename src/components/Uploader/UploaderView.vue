@@ -2,6 +2,12 @@
     <div class="container mx-auto">
         <h1 class="block my-6 text-2xl text-[#494949]">File Uploader</h1>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  p-6 gap-6 bg-[#F8F8F8] border border-solid border-[#D3D3D3] rounded-xl">
+            <!-- Start Display errors -->
+            <display-errors :error-list="filesUploadErros"
+                            :error-message="filesUploadErrosMsg">
+            </display-errors>
+            <!-- end Display errors -->
+
             <!-- Start Previews -->
            <image-preview :images="images"
                             @hideImageSettingModal="hideImageSettingModal"
@@ -25,12 +31,14 @@
 <script>
     import ImagePreview from '@/components/Uploader/ImagePreview.vue';
     import UploadBox from '@/components/Uploader/UploadBox.vue';
+    import DisplayErrors from './DisplayErrors.vue';
 
     export default {
         name: "UploaderView",
         components: {
             ImagePreview,
-            UploadBox
+            UploadBox,
+            DisplayErrors
         },
         data() {
             return {
@@ -46,9 +54,9 @@
                 allowedFileCountUpload: 8,
                 allowedFileSizeToUpload: 4, // MB
                 filesUploadErrosMsg: {
-                    allowedFileCountUpload: '',
-                    allowedTypes: '',
-                    allowedFileSizeToUpload: 10, // MB
+                    allowedFileCountUpload: 'count error',
+                    allowedTypes: 'type error',
+                    allowedFileSizeToUpload: 'size error', 
                 },
                 filesUploadErros: [],
             }
