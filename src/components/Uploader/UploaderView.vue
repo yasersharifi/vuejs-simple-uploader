@@ -1,7 +1,7 @@
 <template>
     <div class="container mx-auto">
         <h1 class="block my-6 text-2xl text-[#494949]">File Uploader</h1>
-        <div class="grid grid-cols-4 p-6 gap-6 bg-[#F8F8F8] border border-solid border-[#D3D3D3] rounded-xl">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  p-6 gap-6 bg-[#F8F8F8] border border-solid border-[#D3D3D3] rounded-xl">
             <!-- Start Previews -->
            <image-preview :images="images"
                             @hideImageSettingModal="hideImageSettingModal"
