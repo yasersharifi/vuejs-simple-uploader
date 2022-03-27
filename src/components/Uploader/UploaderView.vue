@@ -70,6 +70,9 @@
             },
             loadImage(event) {
                 const selectedImages = event.target.files;
+                this.uploadMultipleFiles(selectedImages); // upload multiple image
+            },
+            uploadMultipleFiles(selectedImages) {
                 const self = this;
                 let image = {};
                 let counter = 0;
@@ -92,7 +95,6 @@
                         }
                     }             
                 })
-                console.log(self.filesUploadErros);
             },
             convertFileToBlob(file) {
                 if (file) {
@@ -188,29 +190,9 @@
             },
             drop(event) {
                 event.preventDefault();
-                let selectedImg = event.dataTransfer.files[0];
-                let previewImg = URL.createObjectURL(selectedImg);
 
-                //base 64
-                let canvasImg = null;
-                let self = this;
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    canvasImg = e.target.result; // when success
-                    // add to images array
-                    self.images.push({
-                        src: previewImg,
-                        imageSettingModalIsActive: false,
-                        base64: canvasImg,
-                        isCover: false,
-                    })
-                    //
-                    console.log(self.images)
-                };
-                reader.onerror = function(error) {
-                    console.log(error); // when error
-                };
-                reader.readAsDataURL(selectedImg);
+                const selectedImages = event.dataTransfer.files;
+                this.uploadMultipleFiles(selectedImages); // upload multiple image
                 event.currentTarget.classList.remove('border-dashed');
             },
             dragover(event) {
