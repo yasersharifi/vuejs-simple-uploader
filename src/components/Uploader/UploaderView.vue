@@ -21,8 +21,16 @@
                         @loadImage="loadImage"
                         @dragover="dragover"
                         @dragleave="dragleave"
-                        @drop="drop"></upload-box>
+                        @drop="drop">
+            </upload-box>
             <!-- end upload box -->
+
+            <!-- start crop modal -->
+            <crop-modal :images="images"
+                        :crop-modal="cropModal"
+                        @toggleCropModal="toggleCropModal">
+            </crop-modal>
+            <!-- end crop modal -->
         </div>
     </div>
 </template>
@@ -31,13 +39,15 @@
     import ImagePreview from '@/components/Uploader/ImagePreview.vue';
     import UploadBox from '@/components/Uploader/UploadBox.vue';
     import DisplayErrors from './DisplayErrors.vue';
+    import CropModal from './CropModal.vue';
 
     export default {
         name: "UploaderView",
         components: {
             ImagePreview,
             UploadBox,
-            DisplayErrors
+            DisplayErrors,
+            CropModal
         },
         data() {
             return {
@@ -58,6 +68,8 @@
                     allowedFileSizeToUpload: 'size error', 
                 },
                 filesUploadErrors: [],
+                // cropper data
+                cropModal: true,
             }
         },
         methods: {
@@ -210,6 +222,11 @@
                 // Clean up
                 event.currentTarget.classList.remove('border-dashed');
             },
+            // cropper methods
+            toggleCropModal(value) {
+                if (value !== true && value !== false) return false;
+                this.cropModal = value;
+            }
         },
         computed: {
             allErrors() {
