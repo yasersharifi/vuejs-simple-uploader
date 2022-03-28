@@ -100,6 +100,9 @@
                 this.croppingImageIndex = index;
                 this.cropImage = this.images[index].src;
             }
+        },
+        updated() {
+            console.log("cropImage", this.cropImage);
         }
     }
 </script>
