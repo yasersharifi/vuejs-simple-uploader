@@ -3,8 +3,7 @@
         <h1 class="block my-6 text-2xl text-[#494949]">File Uploader</h1>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  p-6 gap-6 bg-[#F8F8F8] border border-solid border-[#D3D3D3] rounded-xl">
             <!-- Start Display errors -->
-            <display-errors :error-list="filesUploadErros"
-                            :error-message="filesUploadErrosMsg">
+            <display-errors :error-list="allErrors">
             </display-errors>
             <!-- end Display errors -->
 
@@ -53,12 +52,12 @@
                 allowedTypes: ['jpg', 'png', 'jpeg', 'gif'],
                 allowedFileCountUpload: 8,
                 allowedFileSizeToUpload: 4, // MB
-                filesUploadErrosMsg: {
+                filesUploadErrorsMsg: {
                     allowedFileCountUpload: 'count error',
                     allowedTypes: 'type error',
                     allowedFileSizeToUpload: 'size error', 
                 },
-                filesUploadErros: [],
+                filesUploadErrors: [],
             }
         },
         methods: {
@@ -112,8 +111,8 @@
             },
             checkFilesCountToUpload(filesCount, allowedCount) {
                 if (filesCount > allowedCount) {
-                    if (! this.filesUploadErros.includes('allowedFileCountUpload')) {
-                        this.filesUploadErros.push('allowedFileCountUpload');
+                    if (! this.filesUploadErrors.includes('allowedFileCountUpload')) {
+                        this.filesUploadErrors.push('allowedFileCountUpload');
                     }
                     return false;
                 }
@@ -130,8 +129,8 @@
                     return false;
                 }
                 if (fileSizeMb > allowedSize) {
-                    if (! this.filesUploadErros.includes('allowedFileSizeToUpload')) {
-                        this.filesUploadErros.push('allowedFileSizeToUpload');
+                    if (! this.filesUploadErrors.includes('allowedFileSizeToUpload')) {
+                        this.filesUploadErrors.push('allowedFileSizeToUpload');
                     }
                     return false;
                 }
@@ -139,8 +138,8 @@
             },
             checkFileTypesError(fileType, allowedTypes) {
                 if (! allowedTypes.includes(fileType)) {
-                    if (! this.filesUploadErros.includes('allowedTypes')) {
-                        this.filesUploadErros.push('allowedTypes');
+                    if (! this.filesUploadErrors.includes('allowedTypes')) {
+                        this.filesUploadErrors.push('allowedTypes');
                     }
                     return false;
                 }
@@ -212,6 +211,18 @@
                 event.currentTarget.classList.remove('border-dashed');
             },
         },
+        computed: {
+            allErrors() {
+                let errors = [];
+                this.filesUploadErrors.forEach(item => {
+                    console.log(item);
+                    if (Object.hasOwn(this.filesUploadErrorsMsg, item)) {
+                        errors.push(this.filesUploadErrorsMsg[item]);
+                    }
+                })
+                return errors;
+            }
+        }
     }
 </script>
 
