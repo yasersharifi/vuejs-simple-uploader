@@ -42,7 +42,8 @@
                                 class="w-[100px] h-[100px] rounded-xl cursor-pointer">
                             <img :src="item.src"
                                     class="w-full h-full rounded-xl"
-                                    alt="">
+                                    alt=""
+                                    @click="changeDefaultCropImage(index)">
                         </div>
                     </div>
                 </div>
@@ -83,19 +84,22 @@
                 image: null
             }
         }),
-        // changeCrop({ coordinates, image, canvas }) {
-        //     console.log(coordinates, canvas)
-        //     this.result = {
-        //         coordinates,
-        //         image
-        //     };
-        //     this.images[this.croppingImageIndex]['coordinates'] = coordinates;
-        //     console.log(this.result)
-        // },
-        // changeDefaultCropImage(index) {
-        //     // change cropper image
-        //     this.croppingImageIndex = index;
-        //     this.cropImage = this.images[index].src;
-        // }
+        methods: {
+            changeCrop({ coordinates, image, canvas }) {
+                console.log(coordinates, canvas)
+                this.result = {
+                    coordinates,
+                    image
+                };
+                // this.images[this.croppingImageIndex]['coordinates'] = coordinates;
+                console.log(this.result)
+            },
+            changeDefaultCropImage(index) {
+                // change cropper image
+                if(! this.images && ! this.images[index] && ! this.images[index].src) return false;
+                this.croppingImageIndex = index;
+                this.cropImage = this.images[index].src;
+            }
+        }
     }
 </script>
