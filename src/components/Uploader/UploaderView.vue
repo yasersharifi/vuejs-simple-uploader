@@ -69,7 +69,7 @@
                 },
                 filesUploadErrors: [],
                 // cropper data
-                cropModal: true,
+                cropModal: false,
             }
         },
         methods: {
@@ -90,6 +90,7 @@
             loadImage(event) {
                 const selectedImages = event.target.files;
                 this.uploadMultipleFiles(selectedImages); // upload multiple image
+                this.toggleCropModal(true);
             },
             uploadMultipleFiles(selectedImages) {
                 const self = this;
