@@ -136,8 +136,8 @@
                 // allowedSize -> MB
                 let fileSizeMb = this.convertByteToMb(fileSize);
                 if (! fileSizeMb) {
-                    if (! this.filesUploadErros.includes('allowedFileSizeToUpload')) {
-                        this.filesUploadErros.push('allowedFileSizeToUpload');
+                    if (! this.filesUploadErrors.includes('allowedFileSizeToUpload')) {
+                        this.filesUploadErrors.push('allowedFileSizeToUpload');
                     }
                     return false;
                 }
